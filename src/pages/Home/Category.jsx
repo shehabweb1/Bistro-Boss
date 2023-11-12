@@ -11,7 +11,7 @@ import SectionHeader from "../shared/SectionHeader";
 
 const Category = () => {
 	return (
-		<section>
+		<section className="py-10">
 			<SectionHeader
 				heading="ORDER ONLINE"
 				subHeading="From 11:00am to 10:00pm"

@@ -5,7 +5,7 @@ const ServicesSection = () => {
 		backgroundImage: `url(${chefService})`,
 	};
 	return (
-		<div className="py-20 w-full bg-cover bg-center bg-fixed" style={serviceBg}>
+		<div className="py-10 w-full bg-cover bg-center bg-fixed" style={serviceBg}>
 			<div className="max-w-4xl bg-slate-100 text-slate-500 mx-auto p-20 text-center">
 				<h2 className="text-5xl font-semibold mb-3">Bistro Boss</h2>
 				<p>
