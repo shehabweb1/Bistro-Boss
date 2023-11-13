@@ -9,6 +9,7 @@ import dessertBg from "../../assets/menu/dessert-bg.jpeg";
 import pizzaBg from "../../assets/menu/pizza-bg.jpg";
 import saladBg from "../../assets/menu/salad-bg.jpg";
 import soupBg from "../../assets/menu/soup-bg.jpg";
+import SectionHeader from "../shared/SectionHeader";
 
 const Menu = () => {
 	const [menu] = useMenu();
@@ -26,12 +27,13 @@ const Menu = () => {
 			<main>
 				<Hero heroImg={bannerImg} title="OUR MENU" />
 				<section className="py-10">
-					<div className="grid grid-cols-2 gap-10 mb-10">
+					<SectionHeader heading="TODAY'S OFFER" subHeading="Don't miss" />
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
 						{offered.map((item) => (
 							<MenuItem key={item._id} item={item} />
 						))}
 					</div>
-					<button className="btn btn-outline border-b-4 block mx-auto">
+					<button className="btn btn-outline border-0 border-b-4 block mx-auto">
 						ORDER YOUR FAVOURITE FOOD
 					</button>
 				</section>

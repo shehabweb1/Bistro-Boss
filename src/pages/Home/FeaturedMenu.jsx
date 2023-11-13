@@ -26,7 +26,7 @@ const FeaturedMenu = () => {
 								quasi. Eaque repellat recusandae ad laudantium tempore
 								consequatur consequuntur omnis ullam maxime tenetur.
 							</p>
-							<button className="btn btn-outline border-b-4 text-white block mx-auto">
+							<button className="btn btn-outline border-0 border-b-4 text-white block mx-auto">
 								Read More
 							</button>
 						</div>
