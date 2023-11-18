@@ -1,13 +1,21 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
+import Swal from "sweetalert2";
 
 const Header = () => {
 	const { user, logOut } = useContext(AuthContext);
-	console.log(user);
+	const navigate = useNavigate();
 
 	const handleLogOut = () => {
-		logOut().then(() => {});
+		logOut().then(() => {
+			Swal.fire({
+				title: "Successfully",
+				text: "Your Account has been Sign Out!",
+				icon: "success",
+			});
+			navigate("/");
+		});
 	};
 
 	const navItem = (
@@ -26,9 +34,14 @@ const Header = () => {
 			</li>
 			{user ? (
 				<>
-					<button className="btn btn-warning btn-sm" onClick={handleLogOut}>
-						Logout
-					</button>
+					<li>
+						<button onClick={handleLogOut}>SIGN OUT</button>
+					</li>
+					<div className="avatar">
+						<div className="w-10 rounded-full">
+							<img src={user?.photoURL} />
+						</div>
+					</div>
 				</>
 			) : (
 				<>
@@ -66,7 +79,7 @@ const Header = () => {
 						{navItem}
 					</ul>
 				</div>
-				<Link to="/" className=" normal-case text-xl">
+				<Link to="/" className="normal-case text-xl">
 					<div className="flex flex-col">
 						<h2 className="text-3xl font-bold">BISTRO BOSS</h2>
 						<h4 className="text-xl" style={{ letterSpacing: "0.5em" }}>
@@ -75,11 +88,8 @@ const Header = () => {
 					</div>
 				</Link>
 			</div>
-			<div className="navbar-center hidden lg:flex">
+			<div className="navbar-end hidden lg:flex">
 				<ul className="menu uppercase menu-horizontal px-1">{navItem}</ul>
-			</div>
-			<div className="navbar-end">
-				<a className="btn">Button</a>
 			</div>
 		</div>
 	);
