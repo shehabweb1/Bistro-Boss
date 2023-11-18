@@ -1,5 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+import { useContext } from "react";
+
 const Header = () => {
+	const { user, logOut } = useContext(AuthContext);
+	console.log(user);
+
+	const handleLogOut = () => {
+		logOut().then(() => {});
+	};
+
 	const navItem = (
 		<>
 			<li>
@@ -14,9 +24,19 @@ const Header = () => {
 			<li>
 				<NavLink to="/shop/salad">our shop</NavLink>
 			</li>
-			<li>
-				<NavLink to="/login">Login</NavLink>
-			</li>
+			{user ? (
+				<>
+					<button className="btn btn-warning btn-sm" onClick={handleLogOut}>
+						Logout
+					</button>
+				</>
+			) : (
+				<>
+					<li>
+						<NavLink to="/login">Login</NavLink>
+					</li>
+				</>
+			)}
 		</>
 	);
 	return (
