@@ -15,6 +15,7 @@ const Login = () => {
 
 	const navigate = useNavigate();
 	const location = useLocation();
+	let from = location.state?.from?.pathname || "/";
 
 	useEffect(() => {
 		loadCaptchaEnginge(6);
@@ -34,7 +35,7 @@ const Login = () => {
 						icon: "success",
 					});
 
-					navigate(location?.state ? location?.state : "/");
+					navigate(from, { replace: true });
 				}
 			});
 		} else {
