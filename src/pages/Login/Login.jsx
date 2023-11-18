@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Swal from "sweetalert2";
 import loginBg from "../../assets/others/authentication2.png";
 import {
@@ -7,8 +7,15 @@ import {
 	validateCaptcha,
 } from "react-simple-captcha";
 import { Helmet } from "react-helmet-async";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+	const { userLogin, loginWithGoogle } = useContext(AuthContext);
+
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	useEffect(() => {
 		loadCaptchaEnginge(6);
 	}, []);
@@ -19,11 +26,16 @@ const Login = () => {
 		const password = form.password.value;
 		const captcha = form.captcha.value;
 		if (validateCaptcha(captcha)) {
-			console.log(email, password);
-			Swal.fire({
-				title: "Good job!",
-				text: "Your Login is Successful!",
-				icon: "success",
+			userLogin(email, password).then((result) => {
+				if (result) {
+					Swal.fire({
+						title: "Successfully!",
+						text: "Your Account has been Login Successfully!",
+						icon: "success",
+					});
+
+					navigate(location?.state ? location?.state : "/");
+				}
 			});
 		} else {
 			Swal.fire({
@@ -33,6 +45,19 @@ const Login = () => {
 			});
 			form.captcha.value = "";
 		}
+	};
+
+	const handleGoogleLogin = () => {
+		loginWithGoogle().then((result) => {
+			if (result) {
+				Swal.fire({
+					title: "Successfully",
+					text: "Your Account has been Login Successfully!",
+					icon: "success",
+				});
+				navigate("/");
+			}
+		});
 	};
 
 	return (
@@ -97,6 +122,16 @@ const Login = () => {
 								/>
 							</div>
 						</form>
+						<p className="text-yellow-600 text-center">
+							New here? <Link to="/signUp">Create a New Account</Link>
+						</p>
+						<p className="my-3 text-lg text-center">Or sign up with</p>
+						<button
+							className="btn btn-primary w-1/4 mx-auto my-3"
+							onClick={handleGoogleLogin}
+						>
+							Google
+						</button>
 					</div>
 				</div>
 			</div>
