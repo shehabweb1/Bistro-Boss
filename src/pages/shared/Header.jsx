@@ -40,12 +40,12 @@ const Header = () => {
 						<NavLink to="/dashboard/home">DASHBOARD</NavLink>
 					</li>
 					<li>
-						<button className="m-0 px-0 py-1">
+						<NavLink to="/dashboard/cart" className="m-0 px-0 py-1">
 							<BsCart4 className="text-[28px] p-[2px] bg-green-800 rounded-full  border border-yellow-600" />
 							<div className="text-[12px] -mb-4 -ml-4 bg-red-700 text-center px-[2px] rounded-full">
 								{cart?.length > 0 ? cart?.length : 0}
 							</div>
-						</button>
+						</NavLink>
 					</li>
 					<li>
 						<div className="avatar m-0 px-3 py-1">

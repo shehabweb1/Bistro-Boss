@@ -7,12 +7,14 @@ import Shop from "../pages/Shop/Shop";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import Contact from "../pages/Contact/Contact";
-import Admin from "../layout/Admin";
-import AdminHome from "../pages/Dashboard/Admin/AdminHome";
-import AddItems from "../pages/Dashboard/AddItems/AddItems";
-import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
-import ManageBooking from "../pages/Dashboard/ManageBooking/ManageBooking";
-import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import Dashboard from "../layout/Dashboard";
+import UserHome from "../pages/Dashboard/UserHome/UserHome";
+import Reservation from "../pages/Dashboard/Reservation/Reservation";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import Cart from "../pages/Dashboard/Cart/Cart";
+import AddReview from "../pages/Dashboard/AddReview/AddReview";
+import Booking from "./../pages/Dashboard/Booking/Booking";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -44,30 +46,34 @@ const router = createBrowserRouter([
 				element: <SignUp />,
 			},
 		],
-	},	
+	},
 	{
-		path: "admin",
-		element: <Admin />,
+		path: "dashboard",
+		element: <Dashboard />,
 		children: [
 			{
 				path: "home",
-				element: <AdminHome />,
+				element: <UserHome />,
 			},
 			{
-				path: "addItems",
-				element: <AddItems />,
+				path: "reservation",
+				element: <Reservation />,
 			},
 			{
-				path: "manageItems",
-				element: <ManageItems />,
+				path: "paymentHistory",
+				element: <PaymentHistory />,
 			},
 			{
-				path: "manageBooking",
-				element: <ManageBooking />,
+				path: "cart",
+				element: <Cart />,
 			},
 			{
-				path: "allUsers",
-				element: <AllUsers />,
+				path: "addReview",
+				element: <AddReview />,
+			},
+			{
+				path: "booking",
+				element: <Booking />,
 			},
 		],
 	},

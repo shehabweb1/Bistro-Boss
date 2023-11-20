@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 const Recommends = () => {
 	const [menu, setMenu] = useState([]);
@@ -11,6 +12,7 @@ const Recommends = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const axiosSecure = useAxiosSecure();
+	const [, refetch] = useCart();
 
 	useEffect(() => {
 		fetch("menu.json")
@@ -22,7 +24,13 @@ const Recommends = () => {
 
 	const handleAddToCart = (item) => {
 		if (user && user.email) {
-			const cartItem = { email: user.email, ...item };
+			const cartItem = {
+				email: user.email,
+				foodId: item._id,
+				image: item.image,
+				name: item.name,
+				price: item.price,
+			};
 			axiosSecure.post("/carts", cartItem).then((res) => {
 				if (res.data.insertedId) {
 					Swal.fire({
@@ -32,6 +40,7 @@ const Recommends = () => {
 						showConfirmButton: false,
 						timer: 1500,
 					});
+					refetch();
 				}
 			});
 		} else {

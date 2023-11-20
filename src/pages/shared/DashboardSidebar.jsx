@@ -2,15 +2,16 @@ import {
 	FaHome,
 	FaBars,
 	FaShoppingBag,
-	FaListUl,
-	FaBook,
-	FaUsers,
+	FaCalendarAlt,
+	FaWallet,
+	FaShoppingCart,
+	FaCalendarCheck,
+	FaStar,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { ImSpoonKnife } from "react-icons/im";
 import { Link, NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const DashboardSidebar = () => {
 	return (
 		<div className="drawer-side">
 			<label
@@ -32,48 +33,53 @@ const Sidebar = () => {
 					</Link>
 				</li>
 				<li>
-					<NavLink to="home" className="mb-5">
-						<FaHome /> Admin Home
+					<NavLink to="home" className="mb-2">
+						<FaHome /> User Home
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="addItems" className="mb-5">
-						<ImSpoonKnife /> add items
+					<NavLink to="reservation" className="mb-2">
+						<FaCalendarAlt /> reservation
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="manageItems" className="mb-5">
-						<FaListUl /> manage items
+					<NavLink to="paymentHistory" className="mb-2">
+						<FaWallet /> payment history
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="manageBooking" className="mb-5">
-						<FaBook /> Manage bookings
+					<NavLink to="cart" className="mb-2">
+						<FaShoppingCart /> my cart
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="allUsers" className="mb-5">
-						<FaUsers /> all users
+					<NavLink to="addReview" className="mb-2">
+						<FaStar /> add review
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to="booking" className="mb-2">
+						<FaCalendarCheck /> my booking
 					</NavLink>
 				</li>
 				<div className="divider bg-white h-[2px]"></div>
 				<li>
-					<NavLink to="/" className="mb-5">
+					<NavLink to="/" className="mb-2">
 						<FaHome /> Home
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/menu" className="mb-5">
+					<NavLink to="/menu" className="mb-2">
 						<FaBars /> Menu
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/shop/salad" className="mb-5">
+					<NavLink to="/shop/salad" className="mb-2">
 						<FaShoppingBag /> Shop
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/contact" className="mb-5">
+					<NavLink to="/contact" className="mb-2">
 						<MdEmail /> Contact
 					</NavLink>
 				</li>
@@ -82,4 +88,4 @@ const Sidebar = () => {
 	);
 };
 
-export default Sidebar;
+export default DashboardSidebar;

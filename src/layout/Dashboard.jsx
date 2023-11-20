@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import AdminSidebar from "../pages/shared/AdminSidebar";
+import DashboardSidebar from "../pages/shared/DashboardSidebar";
 import { FaBars } from "react-icons/fa";
 
-const Admin = () => {
+const Dashboard = () => {
 	return (
 		<div className="drawer lg:drawer-open">
 			<input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -12,9 +12,9 @@ const Admin = () => {
 			<div className="drawer-content p-5">
 				<Outlet />
 			</div>
-			<AdminSidebar />
+			<DashboardSidebar />
 		</div>
 	);
 };
 
-export default Admin;
+export default Dashboard;
