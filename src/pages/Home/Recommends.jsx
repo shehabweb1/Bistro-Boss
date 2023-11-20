@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import SectionHeader from "../shared/SectionHeader";
+import useAuth from "../../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Recommends = () => {
 	const [menu, setMenu] = useState([]);
+	const { user } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const axiosSecure = useAxiosSecure();
+
 	useEffect(() => {
 		fetch("menu.json")
 			.then((res) => res.json())
@@ -11,6 +20,36 @@ const Recommends = () => {
 			});
 	}, []);
 
+	const handleAddToCart = (item) => {
+		if (user && user.email) {
+			const cartItem = { email: user.email, ...item };
+			axiosSecure.post("/carts", cartItem).then((res) => {
+				if (res.data.insertedId) {
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: "This item has been added",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			});
+		} else {
+			Swal.fire({
+				title: "Do you want to Login?",
+				text: "Please login first then add cart!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Login!",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					navigate("/login", { state: { from: location } });
+				}
+			});
+		}
+	};
 	return (
 		<section className="py-10">
 			<SectionHeader heading={"CHEF RECOMMENDS"} subHeading={"Should Try"} />
@@ -27,7 +66,10 @@ const Recommends = () => {
 							</h4>
 							<p>{item.recipe}</p>
 						</div>
-						<button className="btn btn-outline border-0 bg-gray-600 border-b-4 border-b-yellow-600  text-yellow-600  hover:bg-black hover:border-black  hover:text-yellow-600">
+						<button
+							onClick={() => handleAddToCart(item)}
+							className="btn btn-outline border-0 bg-gray-600 border-b-4 border-b-yellow-600  text-yellow-600  hover:bg-black hover:border-black  hover:text-yellow-600"
+						>
 							add to cart
 						</button>
 					</div>

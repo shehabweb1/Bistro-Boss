@@ -1,10 +1,10 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
-import { useContext } from "react";
 import Swal from "sweetalert2";
+import { BsCart4 } from "react-icons/bs";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
-	const { user, logOut } = useContext(AuthContext);
+	const { user, logOut } = useAuth();
 	const navigate = useNavigate();
 
 	const handleLogOut = () => {
@@ -27,6 +27,9 @@ const Header = () => {
 				<NavLink to="/contact">contact us</NavLink>
 			</li>
 			<li>
+				<NavLink to="/dashboard">DASHBOARD</NavLink>
+			</li>
+			<li>
 				<NavLink to="/menu">our menu</NavLink>
 			</li>
 			<li>
@@ -35,13 +38,21 @@ const Header = () => {
 			{user ? (
 				<>
 					<li>
-						<button onClick={handleLogOut}>SIGN OUT</button>
+						<button className="m-0 px-0 py-1">
+							<BsCart4 className="text-[28px] p-[2px] bg-green-800 rounded-full  border border-yellow-600" />
+							<div className="text-[12px] -mb-4 -ml-4 bg-red-700 text-center px-[2px] rounded-full">
+								0
+							</div>
+						</button>
 					</li>
-					<div className="avatar">
-						<div className="w-10 rounded-full">
-							<img src={user?.photoURL} />
+					<li>
+						<div className="avatar">
+							<button onClick={handleLogOut}>SIGN OUT</button>
+							<div className="w-6 rounded-full">
+								<img src={user?.photoURL} />
+							</div>
 						</div>
-					</div>
+					</li>
 				</>
 			) : (
 				<>
@@ -88,7 +99,7 @@ const Header = () => {
 					</div>
 				</Link>
 			</div>
-			<div className="navbar-end hidden lg:flex">
+			<div className="navbar-center hidden lg:flex">
 				<ul className="menu uppercase menu-horizontal px-1">{navItem}</ul>
 			</div>
 		</div>

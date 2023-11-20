@@ -1,5 +1,46 @@
-const ShopCart = ({ item }) => {
-	const { image, name, recipe, price } = item;
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+const ShopCart = ({ data }) => {
+	const { image, name, recipe, price } = data;
+	const { user } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const axiosSecure = useAxiosSecure();
+
+	const handleAddToCart = (item) => {
+		if (user && user.email) {
+			const cartItem = { email: user.email, ...item };
+			axiosSecure.post("/carts", cartItem).then((res) => {
+				if (res.data.insertedId) {
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: "This item has been added",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			});
+		} else {
+			Swal.fire({
+				title: "Do you want to Login?",
+				text: "Please login first then add cart!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Login!",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					navigate("/login", { state: { from: location } });
+				}
+			});
+		}
+	};
+
 	return (
 		<div className="relative flex flex-col items-center">
 			<img src={image} alt={name} className="w-full h-auto" />
@@ -10,7 +51,10 @@ const ShopCart = ({ item }) => {
 				<h4 className="text-2xl font-bold text-center mb-3">{name}</h4>
 				<p>{recipe}</p>
 			</div>
-			<button className="btn btn-outline border-0 bg-gray-600 border-b-4 border-b-yellow-600  text-yellow-600  hover:bg-black hover:border-black  hover:text-yellow-600">
+			<button
+				onClick={() => handleAddToCart(data)}
+				className="btn btn-outline border-0 bg-gray-600 border-b-4 border-b-yellow-600  text-yellow-600  hover:bg-black hover:border-black  hover:text-yellow-600"
+			>
 				add to cart
 			</button>
 		</div>
