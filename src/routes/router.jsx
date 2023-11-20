@@ -7,6 +7,12 @@ import Shop from "../pages/Shop/Shop";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import Contact from "../pages/Contact/Contact";
+import Admin from "../layout/Admin";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import ManageItems from "../pages/Dashboard/ManageItems/ManageItems";
+import ManageBooking from "../pages/Dashboard/ManageBooking/ManageBooking";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -36,6 +42,32 @@ const router = createBrowserRouter([
 			{
 				path: "signUp",
 				element: <SignUp />,
+			},
+		],
+	},	
+	{
+		path: "admin",
+		element: <Admin />,
+		children: [
+			{
+				path: "home",
+				element: <AdminHome />,
+			},
+			{
+				path: "addItems",
+				element: <AddItems />,
+			},
+			{
+				path: "manageItems",
+				element: <ManageItems />,
+			},
+			{
+				path: "manageBooking",
+				element: <ManageBooking />,
+			},
+			{
+				path: "allUsers",
+				element: <AllUsers />,
 			},
 		],
 	},

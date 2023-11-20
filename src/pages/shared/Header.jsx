@@ -29,9 +29,6 @@ const Header = () => {
 				<NavLink to="/contact">contact us</NavLink>
 			</li>
 			<li>
-				<NavLink to="/dashboard">DASHBOARD</NavLink>
-			</li>
-			<li>
 				<NavLink to="/menu">our menu</NavLink>
 			</li>
 			<li>
@@ -39,6 +36,9 @@ const Header = () => {
 			</li>
 			{user ? (
 				<>
+					<li>
+						<NavLink to="/dashboard/home">DASHBOARD</NavLink>
+					</li>
 					<li>
 						<button className="m-0 px-0 py-1">
 							<BsCart4 className="text-[28px] p-[2px] bg-green-800 rounded-full  border border-yellow-600" />
