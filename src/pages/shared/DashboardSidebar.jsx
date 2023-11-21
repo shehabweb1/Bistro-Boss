@@ -14,9 +14,10 @@ import {
 import { ImSpoonKnife } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
 
 const DashboardSidebar = () => {
-	const isAdmin = true;
+	const [isAdmin] = useAdmin();
 	return (
 		<div className="drawer-side">
 			<label
