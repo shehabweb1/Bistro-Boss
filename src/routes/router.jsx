@@ -14,6 +14,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import AddReview from "../pages/Dashboard/AddReview/AddReview";
 import Booking from "./../pages/Dashboard/Booking/Booking";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 const router = createBrowserRouter([
 	{
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
 			{
 				path: "booking",
 				element: <Booking />,
+			},
+			{
+				path: "allUsers",
+				element: <AllUsers />,
 			},
 		],
 	},
