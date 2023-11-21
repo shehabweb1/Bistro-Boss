@@ -1,13 +1,15 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import signUpBg from "../../assets/others/authentication2.png";
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../shared/SocialLogin";
 
 const SignUp = () => {
-	const { createUser, userUpdate, loginWithGoogle } = useContext(AuthContext);
+	const axiosPublic = useAxiosPublic();
+	const { createUser, userUpdate } = useAuth();
 	const {
 		register,
 		handleSubmit,
@@ -17,18 +19,25 @@ const SignUp = () => {
 	const navigate = useNavigate();
 
 	const onSubmit = (data) => {
-		console.log(data);
 		createUser(data.email, data.password)
 			.then((result) => {
 				if (result) {
 					userUpdate(data.name, data.photo)
 						.then(() => {
-							Swal.fire({
-								title: "Successfully",
-								text: "Your Account has been created Successfully!",
-								icon: "success",
+							const userData = {
+								name: data.name,
+								email: data.email,
+							};
+							axiosPublic.post("/users", userData).then((res) => {
+								if (res.data.insertedId) {
+									Swal.fire({
+										title: "Successfully",
+										text: "Your Account has been created Successfully!",
+										icon: "success",
+									});
+									navigate("/");
+								}
 							});
-							navigate("/");
 						})
 						.catch((error) => {
 							console.log(error.message);
@@ -38,19 +47,6 @@ const SignUp = () => {
 			.catch((error) => {
 				console.log(error.message);
 			});
-	};
-
-	const handleGoogleLogin = () => {
-		loginWithGoogle().then((result) => {
-			if (result) {
-				Swal.fire({
-					title: "Successfully",
-					text: "Your Account has been created Successfully!",
-					icon: "success",
-				});
-				navigate("/");
-			}
-		});
 	};
 
 	return (
@@ -148,12 +144,7 @@ const SignUp = () => {
 							Already registered? <Link to="/login">Go to log in</Link>
 						</p>
 						<p className="my-3 text-lg text-center">Or sign up with</p>
-						<button
-							className="btn btn-primary w-1/4 mx-auto my-3"
-							onClick={handleGoogleLogin}
-						>
-							Google
-						</button>
+						<SocialLogin />
 					</div>
 				</div>
 			</div>

@@ -9,9 +9,10 @@ import {
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import SocialLogin from "../shared/SocialLogin";
 
 const Login = () => {
-	const { userLogin, loginWithGoogle } = useContext(AuthContext);
+	const { userLogin } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -46,19 +47,6 @@ const Login = () => {
 			});
 			form.captcha.value = "";
 		}
-	};
-
-	const handleGoogleLogin = () => {
-		loginWithGoogle().then((result) => {
-			if (result) {
-				Swal.fire({
-					title: "Successfully",
-					text: "Your Account has been Login Successfully!",
-					icon: "success",
-				});
-				navigate("/");
-			}
-		});
 	};
 
 	return (
@@ -127,12 +115,7 @@ const Login = () => {
 							New here? <Link to="/signUp">Create a New Account</Link>
 						</p>
 						<p className="my-3 text-lg text-center">Or sign up with</p>
-						<button
-							className="btn btn-primary w-1/4 mx-auto my-3"
-							onClick={handleGoogleLogin}
-						>
-							Google
-						</button>
+						<SocialLogin />
 					</div>
 				</div>
 			</div>
