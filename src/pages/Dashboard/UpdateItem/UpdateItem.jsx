@@ -1,50 +1,39 @@
-import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import SectionHeader from "../../shared/SectionHeader";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { ImSpoonKnife } from "react-icons/im";
 
-const image_key = import.meta.env.VITE_IMAGE_KEY;
-const image_api = `https://api.imgbb.com/1/upload?key=${image_key}`;
-
-const AddItems = () => {
-	const { register, handleSubmit, reset } = useForm();
-	const axiosPublic = useAxiosPublic();
+const UpdateItem = () => {
+	const { name, category, price, recipe, _id } = useLoaderData();
+	const { register, handleSubmit } = useForm();
 	const axiosSecure = useAxiosSecure();
 
 	const onSubmit = async (data) => {
-		const imageFile = { image: data.image[0] };
-		const res = await axiosPublic.post(image_api, imageFile, {
-			headers: {
-				"content-type": "multipart/form-data",
-			},
-		});
-		if (res.data) {
-			const menuItem = {
-				name: data.name,
-				category: data.category,
-				price: parseFloat(data.price),
-				recipe: data.recipe,
-				image: res.data.data.display_url,
-			};
+		const menuItem = {
+			name: data.name,
+			category: data.category,
+			price: parseFloat(data.price),
+			recipe: data.recipe,
+		};
 
-			const menuRes = await axiosSecure.post("/menu", menuItem);
-			if (menuRes.data.insertedId) {
-				Swal.fire({
-					position: "top-end",
-					icon: "success",
-					title: "This item has been added",
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				reset();
-			}
+		const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
+		if (menuRes.data.modifiedCount) {
+			Swal.fire({
+				position: "top-end",
+				icon: "success",
+				title: "This item has been added",
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
+
+		console.log(menuRes);
 	};
+
 	return (
 		<main>
-			<SectionHeader heading="ADD AN ITEM" subHeading="What's new?" />
+			<SectionHeader heading="UPDATE ITEM" subHeading="Hurry Up!" />
 			<div className="card w-10/12 mx-auto px-5 py-10 shadow-2xl">
 				<form onSubmit={handleSubmit(onSubmit)} className="card-body">
 					<div className="form-control">
@@ -55,6 +44,7 @@ const AddItems = () => {
 							type="text"
 							{...register("name", { required: true })}
 							name="name"
+							defaultValue={name}
 							placeholder="Recipe name"
 							className="input input-bordered"
 						/>
@@ -65,7 +55,7 @@ const AddItems = () => {
 								<span className="label-text">Category*</span>
 							</label>
 							<select
-								defaultValue="default"
+								defaultValue={category}
 								className="select select-bordered w-full max-w-xs"
 								{...register("category")}
 							>
@@ -86,6 +76,7 @@ const AddItems = () => {
 								<span className="label-text">Price*</span>
 							</label>
 							<input
+								defaultValue={price}
 								type="text"
 								{...register("price", { required: true })}
 								name="price"
@@ -100,24 +91,19 @@ const AddItems = () => {
 						</label>
 						<textarea
 							rows="5"
+							defaultValue={recipe}
 							{...register("recipe", { required: true })}
 							name="recipe"
 							placeholder="Recipe Details"
 							className="textarea textarea-bordered"
 						></textarea>
 					</div>
-					<input
-						type="file"
-						{...register("image", { required: true })}
-						name="image"
-						className="file-input w-full max-w-xs"
-					/>
 					<div className="form-control mt-6">
 						<button
 							type="submit"
 							className="btn bg-yellow-700 hover:bg-yellow-800 text-white flex items-center mx-auto"
 						>
-							Add Item <ImSpoonKnife className="text-lg"/>
+							Update Recipe Details
 						</button>
 					</div>
 				</form>
@@ -126,4 +112,4 @@ const AddItems = () => {
 	);
 };
 
-export default AddItems;
+export default UpdateItem;
