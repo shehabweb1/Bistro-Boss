@@ -7,7 +7,7 @@ const AdminRoute = ({ children }) => {
 	const { user, loading } = useAuth();
 	const location = useLocation();
 
-	if (loading && isAdminLoading) {
+	if (loading || isAdminLoading) {
 		return <span className="loading loading-spinner text-warning"></span>;
 	}
 
@@ -15,7 +15,7 @@ const AdminRoute = ({ children }) => {
 		return children;
 	}
 
-	return <Navigate to="/login" state={{ from: location }} replace />;
+	return <Navigate to="/" state={{ from: location }} replace />;
 };
 
 export default AdminRoute;

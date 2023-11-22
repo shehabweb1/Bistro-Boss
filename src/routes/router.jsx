@@ -16,6 +16,8 @@ import AddReview from "../pages/Dashboard/AddReview/AddReview";
 import Booking from "./../pages/Dashboard/Booking/Booking";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import PrivateRoute from "./PrivateRoute";
+import AddItems from "../pages/Dashboard/AddItems/AddItems";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
 	{
@@ -84,6 +86,14 @@ const router = createBrowserRouter([
 			{
 				path: "allUsers",
 				element: <AllUsers />,
+			},
+			{
+				path: "addItems",
+				element: (
+					<AdminRoute>
+						<AddItems />
+					</AdminRoute>
+				),
 			},
 		],
 	},
