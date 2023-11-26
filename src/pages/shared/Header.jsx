@@ -3,11 +3,13 @@ import Swal from "sweetalert2";
 import { BsCart4 } from "react-icons/bs";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
+import useAdmin from "../../hooks/useAdmin";
 
 const Header = () => {
 	const { user, logOut } = useAuth();
 	const navigate = useNavigate();
 	const [cart] = useCart();
+	const [isAdmin] = useAdmin();
 
 	const handleLogOut = () => {
 		logOut().then(() => {
@@ -34,11 +36,18 @@ const Header = () => {
 			<li>
 				<NavLink to="/shop/salad">our shop</NavLink>
 			</li>
+			{user && isAdmin && (
+				<li>
+					<Link to="/dashboard/adminHome">Dashboard</Link>
+				</li>
+			)}
+			{user && !isAdmin && (
+				<li>
+					<Link to="/dashboard/userHome">Dashboard</Link>
+				</li>
+			)}
 			{user ? (
 				<>
-					<li>
-						<NavLink to="/dashboard/home">DASHBOARD</NavLink>
-					</li>
 					<li>
 						<NavLink to="/dashboard/cart" className="m-0 px-0 py-1">
 							<BsCart4 className="text-[28px] p-[2px] bg-green-800 rounded-full  border border-yellow-600" />

@@ -37,7 +37,7 @@ const DashboardSidebar = () => {
 				{isAdmin ? (
 					<>
 						<li>
-							<NavLink to="/dashboard/home" className="mb-5">
+							<NavLink to="/dashboard/adminHome" className="mb-5">
 								<FaHome /> Admin Home
 							</NavLink>
 						</li>
